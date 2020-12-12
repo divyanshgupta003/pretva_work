@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../model/User');
+const path = require('path');
 
 router.post('/register' , async (req,res)=>{
     
@@ -33,7 +34,7 @@ router.post('/login' , async (req,res)=>{
     // console.log('login request here');
     try{
         const password =  req.body.password + req.body.username;
-        // User.findOne
+        // User.findOnes
         let user = await User.findOne({email : req.body.email});
         if(!user){
             return res.status(200).send({message : "Please Register Before Logging In.."});
@@ -50,8 +51,9 @@ router.post('/login' , async (req,res)=>{
     }
 });
 
-router.get('/' , (req,res)=>{
-    return res.end('<h1>Hello</h1>');
+router.get('/', (req, res) => {
+    console.log(__dirname);
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 module.exports = router;
